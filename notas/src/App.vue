@@ -1,22 +1,19 @@
 <template>
-  <div id="app" class="mx-0">
-    <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+  <div id="app" class="d-flex flex-column justify-content-between">
     <cabecera></cabecera>
     <router-view></router-view>
+    <foter></foter>
   </div>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue';
 import cabecera from './components/cabecera.vue';
-// import contenido from './components/contenido.vue';
-// import foter from './components/footer.vue';
+import foter from './components/footer.vue';
 export default {
   name: 'app',
   components: {
-    // HelloWorld,
-    cabecera
+    cabecera,
+    foter
   }
 }
 </script>
@@ -28,6 +25,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-
+  background-color:#EFEFEF;
+  height: 100vh;
 }
 </style>

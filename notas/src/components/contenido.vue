@@ -1,23 +1,24 @@
 <template lang="html">
 
-<div class="mx-0">
-  <div id="notas" class="row mt-4 d-flex justify-content-center mx-0">
-  <input type="text" v-model="nuevaNota" v-on:keyup.enter="add">
-       <button v-on:click="add" @click="show = !show" >Agregar</button>
-  </div>
-  <div>
-       <button v-on:click="eliminar"> Eliminar las completadas</button>
-        <h4>Total de tareas: {{totalNotas}} tareas completadas:{{totalCompletadas}} </h4>
+<div class="mx-0 ">
+  <form class="formu">
+    <div id="notas" class="row mt-4 d-flex justify-content-center mx-0 form-group ">
+      <input type="text" v-model="nuevaNota" v-on:keyup.enter="add" placeholder="¿que quieres recordar?">
+      <button v-on:click="add" @click="show = !show" >Agregar</button>
+    </div>
+    <div class="row mt-4 d-flex justify-content-center mx-0 form-group" id="buscar">
+      <input  type="text" v-model="buscar" placeholder="Buscar nota">
+    </div>
+  </form>
+  <div class="formu">
+    <h5>Total de tareas: {{totalNotas}} tareas completadas:{{totalCompletadas}} </h5>
+    <a v-on:click="eliminar"> Eliminar las completadas</a>
   </div>
        <div class="row mt-4  mx-0">
           <transition-group name='slide-fade' tag='ol' class="col-12">
-          <notas @eliminarNota="borrar" v-for="(nota,index) in arrNotas" :nota="nota" :index="index" :key='nota'></notas>  
+          <notas @eliminarNota="borrar" v-for="(nota,index) in ListaArray" :nota="nota" :index="index" :key='nota'></notas>  
           </transition-group>    
-       </div>
-       <!-- <ul>
-         <nota @eliminarNota="borrar" v-for="(nota,index) of arrNotas" :nota="nota" :index="index" :key="nota"></nota>
-    </ul> -->
-   
+       </div>   
 </div>
 
 </template>
@@ -46,13 +47,14 @@ import notas from './nota.vue';
       return {
         arrNotas:[],
         nuevaNota:null,
+        buscar:"",
         show: true,
       }
     },
     methods: {
       add:function(){
         if(!this.nuevaNota) return;
-          this.arrNotas.push({text:this.nuevaNota,acabada:false})
+          this.arrNotas.push({text:this.nuevaNota,acabada:false,fecha:new Date().toLocaleString()})
           this.nuevaNota="";
           this.guardarNotas();
       },
@@ -65,8 +67,8 @@ import notas from './nota.vue';
           this.guardarNotas();
       },
       guardarNotas() {
-      const parsed = JSON.stringify(this.arrNotas);
-      localStorage.setItem('arrNotas', parsed);
+      const guardar = JSON.stringify(this.arrNotas);
+      localStorage.setItem('arrNotas', guardar);
       }
     },
     computed: {
@@ -81,31 +83,42 @@ import notas from './nota.vue';
                 }    
             }
            return notasCompletadas;
-      }
+      },
+      ListaArray: function () {
+      var busca=this.buscar;
+      return this.arrNotas.filter(function (nota) {
+        return nota.text.indexOf(busca) != -1
+      })
+    }
 
     }
 }
 </script>
 
 <style scoped lang="css">
-  .slide-fade-enter-active {
-    transition: all .3s ease;
-  }
-  .slide-fade-leave-active {
-    transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-  }
-  .slide-fade-enter, .slide-fade-leave-to
-  /* .slide-fade-leave-active below version 2.1.8 */ {
-    transform: translateX(10px);
-    opacity: 0;
-  }
-  .slide-fade-move{
-    transition: all .3s ease;
-  }
-  #notas input{
-    width: 80%;
-  }
-  #notas{
-    border-bottom-color: aqua;
-  }
+.slide-fade-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
+}
+#notas input {
+  width: 80%;
+}
+#buscar input {
+  width: 90%;
+}
+a {
+  color: #ff3b3f;
+}
+.formu {
+  border-bottom-color: gray;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+}
 </style>

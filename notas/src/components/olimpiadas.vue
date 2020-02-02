@@ -67,27 +67,28 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td scope="row"></td>
+                        <td scope="row">Johnny Weissmuller</td>
                     </tr>
                     <tr>
-                        <td scope="row"></td>
+                        <td scope="row">Jesse Owens</td>
                     </tr>
                     <tr>
-                        <td scope="row"></td>
+                        <td scope="row">Nadia Comaneci</td>
                     </tr>
                     <tr>
-                        <td scope="row"></td>
+                        <td scope="row">Michael Phelps</td>
                     </tr>
                     <tr>
-                        <td scope="row"></td>
+                        <td scope="row">Usain Bolt</td>
                     </tr>
                     <tr>
-                        <td scope="row"></td>
+                        <td scope="row">Simeone Biles</td>
                     </tr>
                 </tbody>
         </table>
     </div>
     </div>
+    
   </div>
 </template>
 
